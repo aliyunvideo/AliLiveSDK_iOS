@@ -183,7 +183,7 @@
  * @param rMode 视频渲染方式
  * @param mMode 是否需要镜像
  */
-- (void)renderRemoteStreamWithView:(AliLiveRenderView *)renderView url:(NSString *)url renderMode:(AliLiveRenderMode)rMode mirrorMode:(AliLiveRenderMirrorMode)mMode;
+- (void)renderRemoteStreamWithView:(AliLiveRenderView *)renderView url:(NSString *)url enderMode:(AliLiveRenderMode)rMode mirrorMode:(AliLiveRenderMirrorMode)mMode;
 
 /**
  * @brief 查询是否正在推流
@@ -245,9 +245,7 @@
 - (int)setPlayoutVolume:(NSInteger)volume;
 
 /**
- * @brief 设置SDK对AVAudioSession的控制权限
- * @param restriction 设置对应的权限
- * @return 0表示Success 非0表示Failure
+ * 设置SDK对AVAudioSession的控制权限
  */
 - (int)setAudioSessionOperationRestriction:(AliLiveAudioSessionOperationRestriction)restriction;
 
@@ -256,6 +254,7 @@
  * @param zoom   zoom的级别
  * @param flash  是否允许闪光灯
  * @return 0表示Success 非0表示Failure
+ * @note 在将来版本中统一通过setParameters设置
  */
  - (int)setCameraZoom:(float)zoom flash:(BOOL)flash;
 

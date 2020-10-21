@@ -27,7 +27,7 @@
 
 /**
  * @brief 前后置摄像头
- * @note 默认 : 前置摄像头
+ * @note 默认 : 前置摄像头 （暂未实现）
  */
 @property(nonatomic, assign) AliLiveCameraPosition cameraPosition;
 
@@ -80,7 +80,7 @@
 @property (nonatomic, assign) BOOL enableHighDefPreview;
 
 /**
-  视频硬编码 （功能特性，需要保留）
+ rtmp 视频硬编码 （功能特性，需要保留）
  * 默认 : YES
  */
 @property (nonatomic, assign) BOOL enableVideoHWAcceleration;

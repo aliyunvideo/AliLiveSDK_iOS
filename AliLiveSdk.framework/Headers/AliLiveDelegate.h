@@ -143,42 +143,31 @@
 
 @required
 
-/**
- * @brief 网络状态变化回调
- * @param publisher 推流实例对象
- * @param netStatus  AliLiveNetworkStatus
-*/
 - (void)onNetworkStatusChange:(AliLiveEngine *)publisher status:(AliLiveNetworkStatus)netStatus;
 
 /**
- * @brief 网络差回调
- * @param publisher 推流实例对象
+ 网络差回调
  */
 - (void)onNetworkPoor:(AliLiveEngine *)publisher;
 
-
 /**
- * @brief 网络恢复
- * @param publisher 推流实例对象
-*/
+ 网络恢复
+ */
 - (void)onNetworkRecovery:(AliLiveEngine *)publisher;
 
 /**
- * @brief 重连开始回调
- * @param publisher 推流实例对象
-*/
+ 重连开始回调
+  */
 - (void)onReconnectStart:(AliLiveEngine *)publisher;
 
 /**
  * @brief 网络连接重连成功
- * @param publisher 推流实例对象
  */
 - (void)onReconnectSuccess:(AliLiveEngine *)publisher;
 
 /**
- * @brief 连接被断开
- * @param publisher 推流实例对象
-*/
+ 连接被断开
+  */
 - (void)onConnectionLost:(AliLiveEngine *)publisher;
 
 @end
