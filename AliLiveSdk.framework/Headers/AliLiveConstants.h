@@ -367,3 +367,64 @@ typedef NS_ENUM(NSInteger, AliLiveNetworkStatus) {
     AliLiveNetworkStatusWWAN               = 2,//蜂窝数据
 };
 
+/**
+ 背景音乐播放状态
+ - AliLiveAudioPlayingStarted: 开始播放
+ - AliLiveAudioPlayingStopped: 停止播放
+ - AliLiveAudioPlayingPaused: 播放暂停
+ - AliLiveAudioPlayingResumed: 播放恢复
+ - AliLiveAudioPlayingEnded: 播放完毕
+ - AliLiveAudioPlayingBuffering: 正在缓冲
+ - AliLiveAudioPlayingBufferingEnd: 缓冲结束
+ */
+typedef NS_ENUM(NSInteger, AliLiveAudioPlayingStateCode) {
+    AliLiveAudioPlayingStarted      = 100,
+    AliLiveAudioPlayingStopped      = 101,
+    AliLiveAudioPlayingPaused       = 102,
+    AliLiveAudioPlayingResumed      = 103,
+    AliLiveAudioPlayingEnded        = 104,
+    AliLiveAudioPlayingBuffering    = 105,
+    AliLiveAudioPlayingBufferingEnd = 106,
+    AliLiveAudioPlayingFailed       = 107,
+};
+
+/**
+ 背景音乐播放错误码
+ - AliLiveAudioPlayingNoError: 没有错误
+ - AliLiveAudioPlayingOpenFailed: 打开文件错误
+ */
+typedef NS_ENUM(NSInteger, AliLiveAudioPlayingErrorCode) {
+    AliLiveAudioPlayingNoError   = 0,
+    AliLiveAudioPlayingOpenFailed   = -100,
+};
+
+/**
+ * 变声选项
+ */
+typedef NS_ENUM(NSInteger, AliLiveVoiceChangerMode) {
+    AliLiveVoiceChanger_OFF = 0,     //关闭
+    AliLiveVoiceChanger_OLD_MAN,     //老人
+    AliLiveVoiceChanger_BABYBOY,     //男孩
+    AliLiveVoiceChanger_BABYGILR,    //女孩
+    AliLiveVoiceChanger_ROBOT,       //机器人
+    AliLiveVoiceChanger_DAIMO,       //大魔王
+    AliLiveVoiceChanger_KTV,         //KTV
+    AliLiveVoiceChanger_ECHO,        //回声
+};
+
+/**
+ * 混响模式
+ */
+typedef NS_ENUM(NSInteger, AliLiveReverbMode) {
+    AliLiveReverb_Off = 0,            // 关闭
+    AliLiveReverb_Vocal_I ,           //人声 I
+    AliLiveReverb_Vocal_II,           // 人声 II
+    AliLiveReverb_Bathroom,           // 澡堂
+    AliLiveReverb_Small_Room_Bright,  // 明亮小房间
+    AliLiveReverb_Small_Room_Dark,    // 黑暗小房间
+    AliLiveReverb_Medium_Room,        // 中等房间
+    AliLiveReverb_Large_Room,         // 大房间
+    AliLiveReverb_Church_Hall,        // 教堂走廊
+    AliLiveReverb_Cathedral,          // 大教堂
+};
+

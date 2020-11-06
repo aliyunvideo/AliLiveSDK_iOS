@@ -10,7 +10,9 @@
 #import <UIKit/UIKit.h>
 #import "AliLiveConstants.h"
 
-#pragma mark AliLiveConfig
+#define CUSTOM_MODE_VIDEO_PREPROCESS                0X001   ///> 客户自定义视频前处理
+#define CUSTOM_MODE_AUDIO_PREPROCESS                0X002   ///> 客户自定义音频前处理 (暂不支持)
+
 @interface AliLiveConfig : NSObject
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +53,7 @@
 
 /**
  * @brief 可以设置推流一张图片，此时观众只能看到推的这张图片，常用在App 切换至后台
- * 设置后调用paushPush进入推送图片
+ * 设置后调用paushPush进入推送图片 暂时仅RTMP推流支持
  */
 @property(nonatomic, strong) UIImage *pauseImage;
 
@@ -95,7 +97,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-//  RTMP方式推流特有参数 （以下参数仅在RTMP推流模式下设置，RTS推流设置一下参数无效）
+//  RTMP方式推流特有参数 （以下参数仅在RTMP推流模式下设置，RTS推流设置以下参数无效）
 //  推流地址以rtmp:// 开头的推流是RTMP推流
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,5 +170,22 @@
  */
 @property (nonatomic, assign) NSUInteger autoReconnectRetryInterval;
 
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+//                      自定义前处理
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * 自定义前处理开关
+ * 默认：关闭
+ * 【特别说明】该字段需要使用与运算符进行级联操作:
+ *      开启自定义视频前处理：_config.customPreProcessMode |= CUSTOM_MODE_VIDEO_PREPROCESS；
+ *                              典型场景是外接美颜，该功能开启之后内置美颜关闭
+ *      开启自定义音频前处理：_config.customPreProcessMode |= CUSTOM_MODE_AUDIO_PREPROCESS；
+ *                              暂不支持音频前处理
+ */
+@property(nonatomic, assign) int customPreProcessMode;
 
 @end

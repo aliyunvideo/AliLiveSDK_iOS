@@ -114,7 +114,7 @@
  * @brief 设置设备横竖屏方向
  * @param mode 设备方向
  * @return 0表示Success 非0表示Failure
- * @note 当前只支持固定横竖屏模式，仅允许在推流和预览之前进行设置
+ * @note 当前只支持固定横竖屏模式，需要在startPreview之后设置
  */
 - (int)setDeviceOrientationMode:(AliLiveOrientationMode)mode;
 
@@ -298,5 +298,109 @@
  * @param enable 美颜开关
 */
 - (void)setBeautyEffect:(BOOL)enable;
+
+#pragma mark - "音乐伴奏音效"
+
+/**
+ * @brief 启用耳返
+ * @param enable 是否启用耳返
+ * @return 返回0为成功，其他返回错误码
+ * @note 建议在插入耳机下开启耳返，否则可能会引入回声
+ */
+- (int)enableEarBack:(BOOL)enable;
+
+/**
+ * @brief 设置耳返音量
+ * @param volume 音量 0~100 默认100
+ * @return 返回0为成功，其他返回错误码
+ */
+- (int)setEarBackVolume:(NSInteger)volume;
+
+/**
+ * @brief 播放背景音乐
+ * @param path 本地音乐文件路径(仅支持mp3 wav格式音频 且不支持中文路径)
+ * @param publish 是否推流 YES推流到远端 NO仅本地试听，不推流到远端
+ * @param loop 是否循环播放 NO不循环 YES循环
+ * @return 返回0为成功，其他返回错误码
+ * @note 异步接口，可通过onBGMStateChanged监听状态
+ *
+ */
+- (int)playBGM:(NSString *)path publish:(BOOL)publish loop:(BOOL)loop;
+
+/**
+ * @brief 停止播放背景音乐
+ * @return 返回0为成功，其他返回错误码
+ */
+- (int)stopBGM;
+
+/**
+ * @brief 暂停播放背景音乐
+ * @return 返回0为成功，其他返回错误码
+ */
+- (int)pauseBGM;
+
+/**
+ * @brief 恢复播放背景音乐
+ * @return 返回0为成功，其他返回错误码
+ */
+- (int)resumeBGM;
+
+/**
+ * @brief 设置背景音乐音量
+ * @param volume 音乐音量大小 范围:[0 ~ 100] 默认:50
+ * @return 返回0为成功，其他返回错误码
+ * @note 设置音量需要在playBGM后才能生效
+ */
+- (int)setBGMVolume:(NSInteger)volume;
+
+/**
+ * @brief 获取背景音乐文件的总时长，单位是毫秒
+ * @return >=0 时长,  <0 失败
+ */
+- (int)getBGMDuration;
+
+/**
+ * @brief 获取背景音乐播放进度，单位为毫秒
+ * @return >=0 进度,  <0 失败
+ */
+- (int)getBGMCurrentPosition;
+
+/**
+ * @brief 设置背景音乐的播放位置
+ * @param pos 进度条位置，单位为毫秒
+ * @return 返回0为成功，其他返回错误码
+ */
+- (int)setBGMPosition:(NSInteger)pos;
+
+/**
+ * @brief 调整声音音调高低
+ * @param pitch 音调，默认值是1.0f，范围[0.5, 2.0]
+ * @return 返回0为成功，其他返回错误码
+*/
+- (int)setPicthValue:(float)pitch;
+
+/**
+ * @brief 设置混响模式
+ * @param mode 混响模式，详见 “AliLiveConstants.h” 中的 AliLiveReverbMode 定义
+ * @return 返回0为成功，其他返回错误码
+ */
+- (int)setReverbMode:(AliLiveReverbMode)mode;
+
+/**
+ * @brief 设置变声模式
+ * @param mode 模式值，详见 “AliLiveConstants.h” 中的 AliLiveVoiceChangerMode 定义
+ * @return 返回0为成功，其他返回错误码
+ */
+- (int)setVoiceChangerMode:(AliLiveVoiceChangerMode)mode;
+
+#pragma mark - "自定义视频前处理回调"
+/**
+ * @brief 设置视频前处理回调回调
+ * @param delegate 视频前处理回调
+ * @note 如果要开启自定义视频前处理 需要给 AliLiveConfig 中的 customPreProcessMode 属性增加 CUSTOM_MODE_VIDEO_PREPROCESS 选项
+ *       SDK 会通过 AliLiveVidePreProcessDelegate（见“AliLiveDelegate.h”）回调将数据回调给您的 App 进行二次加工
+ *       出于性能和稳定性考虑，一般不建议在该回调中做耗时操作。
+*/
+- (void)setVidePreProcessDelegate:(id<AliLiveVidePreProcessDelegate>)delegate;
 
 @end

@@ -164,29 +164,29 @@
 - (void)onNetworkRecovery:(AliLiveEngine *)publisher;
 
 /**
- * @brief 重连开始回调
+ * @brief 网络连接断开
+ * @param publisher 推流实例对象
+*/
+- (void)onConnectionLost:(AliLiveEngine *)publisher;
+
+/**
+ * @brief 网络重连开始
  * @param publisher 推流实例对象
 */
 - (void)onReconnectStart:(AliLiveEngine *)publisher;
 
 /**
- * @brief 网络连接重连成功
+ * @brief 网络重连状态
  * @param publisher 推流实例对象
+ * @param success 是否重连成功 YES成功 NO失败
  */
-- (void)onReconnectSuccess:(AliLiveEngine *)publisher;
-
-/**
- * @brief 连接被断开
- * @param publisher 推流实例对象
-*/
-- (void)onConnectionLost:(AliLiveEngine *)publisher;
+- (void)onReconnectStatus:(AliLiveEngine *)publisher success:(BOOL)success;
 
 @end
 
 
 #pragma mark - AliLiveStatusDelegate 回调
 @protocol AliLivePushInfoStatusDelegate <NSObject>
-
 
 /**
  * @brief 如果engine出现error，通过这个回调通知app
@@ -232,5 +232,42 @@
 */
 - (void)onLivePushStoped:(AliLiveEngine *)publisher;
 
+/**
+ * @brief 伴奏播放状态回调
+ * @param playState 当前播放状态
+ * @param errorCode 播放错误码
+ */
+- (void)onBGMStateChanged:(AliLiveEngine *)publisher
+                playState:(AliLiveAudioPlayingStateCode)playState
+                errorCode:(AliLiveAudioPlayingErrorCode)errorCode;
+@end
+
+#pragma mark - AliLiveVideoPreProcessDelegate 回调
+@protocol AliLiveVidePreProcessDelegate <NSObject>
+@optional
+
+/**
+ * 在OpenGL线程中回调，在这里可以进行采集图像的二次处理,  如美颜
+ * @param texture    纹理ID
+ * @param width      纹理的宽度
+ * @param height     纹理的高度
+ * @param rotate  纹理的角度
+ * @return  返回给SDK的纹理
+ * 说明：SDK回调出来的纹理类型是GL_TEXTURE_2D，接口返回给SDK的纹理类型也必须是GL_TEXTURE_2D; 该回调在SDK美颜之后. 纹理格式为GL_RGBA
+ */
+- (int)onTexture:(int)texture width:(int)width height:(int)height rotate:(int)rotate;
+
+/**
+ * 在OpenGL线程中回调，可以在这里释放创建的OpenGL资源
+ */
+- (void)onTextureDestoryed;
+
+/**
+ * 视频采集对象回调，进行采集图像的二次处理
+ * @param pixelBuffer   采集图像
+ * @return 返回给SDK的处理的图像
+ * @note 若实现了该回调请回调有效的图像，若回调图像为nil，sdk会直接显示原采集图像
+ */
+- (CVPixelBufferRef)onVideoPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 
 @end
