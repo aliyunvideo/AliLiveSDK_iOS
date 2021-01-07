@@ -94,6 +94,13 @@
 */
 @property (nonatomic, assign) BOOL enableVideoDecodeHWAcceleration;
 
+/**
+ video GOP size
+ 视频编码GOP size，单位s秒
+ * 默认 : 2秒
+ */
+@property (nonatomic, assign)AliLivePushVideoEncodeGOP videoGopSize;
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -107,13 +114,6 @@
  * 默认 : NO
  */
 @property (nonatomic, assign) BOOL enableAudioHWAcceleration;
-
-/**
- rtmp video GOP size
- 视频编码GOP size，单位s秒
- * 默认 : 2秒
- */
-@property (nonatomic, assign)AliLivePushVideoEncodeGOP videoGopSize;
 
 /**
  rtmp video init bitrate
@@ -187,5 +187,10 @@
  *                              暂不支持音频前处理
  */
 @property(nonatomic, assign) int customPreProcessMode;
+
+/**
+ * 该字段为辅助字段，用户可以传入直播成员唯一标示，用于sdk问题的日志排查
+ */
+@property(nonatomic, strong) NSString *extra;
 
 @end

@@ -17,10 +17,22 @@
 
 // In this header, you should import all the public headers of your framework using statements like #import <AliLiveSdk/PublicHeader.h>
 
+//#ifdef AliLiveSDK
 #import <AliLiveSdk/AliLiveConfig.h>
-#import <AliLiveSdk/AliLiveRaceBeautyManager.h>
 #import <AliLiveSdk/AliLiveConstants.h>
 #import <AliLiveSdk/AliLiveError.h>
+#import <AliLiveSdk/AliLiveRaceBeautyManager.h>
 #import <AliLiveSdk/AliLiveEngine.h>
+
+//#else
+//#import <AliMediaSdk/AliLiveConfig.h>
+//#import <AliMediaSdk/AliLiveRaceBeautyManager.h>
+//#import <AliMediaSdk/AliLiveConstants.h>
+//#import <AliMediaSdk/AliLiveError.h>
+//#import <AliMediaSdk/AliLiveEngine.h>
+//
+//#endif
+
+
 
 

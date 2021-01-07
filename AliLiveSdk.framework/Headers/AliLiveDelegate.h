@@ -13,14 +13,14 @@
  实时数据
  */
 @interface AliLiveStats : NSObject
-@property (nonatomic, assign) int64_t sent_kbitrate;      // 总发送码率(kb)
-@property (nonatomic, assign) int64_t rcvd_kbitrate;      // 总接收码率(kb)
-@property (nonatomic, assign) int64_t sent_bytes;        // 总发送数据量(bytes)
-@property (nonatomic, assign) int64_t rcvd_bytes;        // 总接收数据量(bytes)
-@property (nonatomic, assign) int64_t video_rcvd_kbitrate;  // 视频接收码率(kb)
-@property (nonatomic, assign) int64_t video_sent_kbitrate;  // 视频发送码率(kb)
-@property (nonatomic, assign) uint64_t call_duration;      // 通话时长(s)
-@property (nonatomic, assign) float cpu_usage;            // CPU使用量(%)
+@property (nonatomic, assign) int64_t sentKbitrate;       // 总发送码率(kb)
+@property (nonatomic, assign) int64_t rcvdKbitrate;       // 总接收码率(kb)
+@property (nonatomic, assign) int64_t sentBytes;          // 总发送数据量(bytes)
+@property (nonatomic, assign) int64_t rcvdBytes;          // 总接收数据量(bytes)
+@property (nonatomic, assign) int64_t videoRcvdKbitrate;  // 视频接收码率(kb)
+@property (nonatomic, assign) int64_t videoSentKbitrate;  // 视频发送码率(kb)
+@property (nonatomic, assign) uint64_t callDuration;      // 通话时长(s)
+@property (nonatomic, assign) float cpuUsage;             // CPU使用量(%)
 @end
 
 
@@ -30,9 +30,9 @@
 @interface AliLiveLocalVideoStats : NSObject
 
 @property (nonatomic, assign) AliLiveVideoTrack track; // 视频流track类型
-@property (nonatomic, assign) uint32_t sent_bitrate;  // 发送码率
-@property (nonatomic, assign) uint32_t sent_fps;      // 发送帧率
-@property (nonatomic, assign) uint32_t encode_fps;    // 编码帧率
+@property (nonatomic, assign) uint32_t sentBitrate;    // 发送码率
+@property (nonatomic, assign) uint32_t sentFps;        // 发送帧率
+@property (nonatomic, assign) uint32_t encodeFps;      // 编码帧率
 
 @end
 
@@ -41,13 +41,13 @@
  */
 @interface AliLiveRemoteVideoStats : NSObject
 
-@property (nonatomic, copy) NSString *userId;           // 远端用户userID
+@property (nonatomic, copy) NSString *userId;            // 远端用户userID
 @property (nonatomic, assign) AliLiveVideoTrack track;   // 视频流track类型
-@property (nonatomic, assign) uint32_t width;           // width
-@property (nonatomic, assign) uint32_t height;          // height
-@property (nonatomic, assign) uint32_t decode_fps;      // 解码帧率
-@property (nonatomic, assign) uint32_t render_fps;      // 渲染帧率
-@property (nonatomic, assign) uint32_t frozen_times;    // 卡顿次数
+@property (nonatomic, assign) uint32_t width;            // width
+@property (nonatomic, assign) uint32_t height;           // height
+@property (nonatomic, assign) uint32_t decodeFps;        // 解码帧率
+@property (nonatomic, assign) uint32_t renderFps;        // 渲染帧率
+@property (nonatomic, assign) uint32_t frozenTimes;      // 卡顿次数
 
 @end
 
@@ -56,12 +56,11 @@
  */
 @interface AliLiveRemoteAudioStats : NSObject
 
-@property (nonatomic, copy) NSString *userId;           // 远端用户userID
+@property (nonatomic, copy) NSString *userId;            // 远端用户userID
 @property (nonatomic, assign) AliLiveAudioTrack track;   // 视频流track类型
-//@property (nonatomic, assign) uint32_t quality;         // 远端用户发送的音频流质量, 具体类型参看AliLiveTranportAudioQuality
-@property (nonatomic, assign) uint32_t audio_loss_rate; // 回调周期内的音频丢帧率
-@property (nonatomic, assign) uint32_t rcvd_bitrate;    // 接收流的瞬时码率（Kbps）
-@property (nonatomic, assign) uint32_t total_frozen_times; // 远端用户加入频道后音频卡顿的累计时长 (ms)。
+@property (nonatomic, assign) uint32_t audioLossRate;    // 回调周期内的音频丢帧率
+@property (nonatomic, assign) uint32_t rcvdBitrate;      // 接收流的瞬时码率（Kbps）
+@property (nonatomic, assign) uint32_t totalFrozenTimes; // 远端用户加入频道后音频卡顿的累计时长 (ms)。
 
 @end
 
@@ -77,25 +76,21 @@
 
 @class AliLiveEngine;
 
-#pragma mark - AliLiveRtsDelegate 回调
 @protocol AliLiveRtsDelegate <NSObject>
-@optional
 
+@optional
 /**
  * @brief 订阅状态回调
  * @param result 订阅状态，成功或者失败
  * @param url 订阅成员的唯一标识
  */
 - (void)onSubscribe:(AliLiveEngine *)publisher result:(AliLiveResult *)result url:(NSString *)url;
-
 /**
  * @brief 取消订阅状态回调
  * @param result 取消订阅状态，成功或者失败
  * @param url 取消订阅成员的唯一标识
  */
 - (void)onUnSubscribe:(AliLiveEngine *)publisher result:(AliLiveResult *)result url:(NSString *)url;
-
-
 /**
  * @brief 首包数据接收成功
  * @param url  接收成功第一个包的成员标示
@@ -109,32 +104,36 @@
 */
 - (void)onFirstRemoteVideoFrameDrawn:(AliLiveEngine *)publisher url:(NSString *)url;
 
+@end
+
+#pragma mark - AliLiveDataStatsDelegate 回调
+@protocol AliLiveDataStatsDelegate <NSObject>
 
 //统计媒体流相关信息
 /**
  * @brief 实时数据回调(2s触发一次)
  * @param stats stats
  */
-- (void)onRtsStats:(AliLiveEngine *)publisher stats:(AliLiveStats *)stats;
+- (void)onLiveTotalStats:(AliLiveEngine *)publisher stats:(AliLiveStats *)stats;
 
 /**
  * @brief 本地视频统计信息(2s触发一次)
  * @param localVideoStats 本地视频统计信息
  * @note SDK每两秒触发一次此统计信息回调
  */
-- (void)onRtsLocalVideoStats:(AliLiveEngine *)publisher stats:(AliLiveLocalVideoStats *)localVideoStats;
+- (void)onLiveLocalVideoStats:(AliLiveEngine *)publisher stats:(AliLiveLocalVideoStats *)localVideoStats;
 
 /**
  * @brief 远端视频统计信息(2s触发一次)
  * @param remoteVideoStats 远端视频统计信息
  */
-- (void)onRtsRemoteVideoStats:(AliLiveEngine *)publisher stats:(AliLiveRemoteVideoStats *)remoteVideoStats;
+- (void)onLiveRemoteVideoStats:(AliLiveEngine *)publisher stats:(AliLiveRemoteVideoStats *)remoteVideoStats;
 
 /**
  * @brief 远端音频统计信息(2s触发一次)
  * @param remoteAudioStats 远端视频统计信息
  */
-- (void)onRtsRemoteAudioStats:(AliLiveEngine *)publisher stats:(AliLiveRemoteAudioStats *)remoteAudioStats;
+- (void)onLiveRemoteAudioStats:(AliLiveEngine *)publisher stats:(AliLiveRemoteAudioStats *)remoteAudioStats;
 
 @end
 

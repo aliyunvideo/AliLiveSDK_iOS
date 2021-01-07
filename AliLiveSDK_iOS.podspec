@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "AliLiveSDK_iOS"
-  spec.version      = "4.0.1"
+  spec.version      = "4.0.2"
   spec.summary      = "AliLiveSDK_iOS."
 
   # This description is used to generate tags and improve search results.
@@ -117,7 +117,7 @@ Pod::Spec.new do |spec|
 
   # spec.framework  = "SomeFramework"
   spec.frameworks = "CoreVideo","OpenGLES","AVFoundation","CoreMedia","VideoToolbox","AudioToolbox"
-  spec.vendored_frameworks = "AliLiveSdk.framework","opencv2.framework"
+  spec.vendored_frameworks = "AliLiveSdk.framework"
 
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"

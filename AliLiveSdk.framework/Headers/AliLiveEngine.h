@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "AliLiveConfig.h"
 #import "AliLiveDelegate.h"
-#import "AliLiveRaceBeautyManager.h"
 
-
+@class AliLiveRaceBeautyManager;
 /**
  渲染view基类
  */
@@ -26,9 +25,21 @@
 
 @end
 
+/**
+ 美颜设置
+
+ - whiteningLevel: 美白等级
+ - smoothnessLevel: 磨皮等级
+*/
+@interface AliLiveBeautyConfig : NSObject
+
+@property (nonatomic, assign) float whiteningLevel;      //美白等级[0-1.0]
+@property (nonatomic, assign) float smoothnessLevel;     //磨皮等级[0-1.0]
+
+@end
+
 #pragma mark - 接口主类
 
-@class AliLiveRaceBeautyManager;
 
 @interface AliLiveEngine : NSObject 
 
@@ -55,9 +66,15 @@
 - (void)destorySdk;
 
 /**
- * @brief 设置RTS推流相关回调
- * @param delegate RTS回调
+ * @brief 设置RTC/RTMP推流相关回调
+ * @param delegate 直播媒体参数回调
  */
+- (void) setDataStatsDelegate:(id<AliLiveDataStatsDelegate>)delegate;
+
+/**
+* @brief 设置RTS推流相关回调
+* @param delegate RTS回调
+*/
 - (void) setRtsDelegate:(id<AliLiveRtsDelegate>)delegate;
 
 /**
@@ -159,9 +176,8 @@
 /**
  * @brief 订阅RTS 方式连麦的成员媒体流
  * @param url 需要被订阅的连麦成员的唯一url标示
- * @param master 是否是订阅主流(RTS 流存在大小两路流可被订阅)
  */
-- (void)subscribeStream:(NSString *)url preferMaster:(BOOL)master;
+- (void)subscribeStream:(NSString *)url;
 
 /**
  * @brief 取消订阅RTC 方式的连麦成员媒体流
@@ -292,12 +308,6 @@
  * @return 获取美颜管理对象
 */
 - (AliLiveRaceBeautyManager *)getRaceBeautyManager;
-
-/**
- * @brief 打开或者关闭美颜，美颜开关打开后，可以获取getRaceBeautyManager 函数开获取AliLiveRaceBeautyManager对象，调用该对象的api设置美颜效果
- * @param enable 美颜开关
-*/
-- (void)setBeautyEffect:(BOOL)enable;
 
 #pragma mark - "音乐伴奏音效"
 
